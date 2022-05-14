@@ -1,3 +1,3 @@
 # Bankist
 
-## 📝 An overall practise on the array methods!
+## 📝 An overall practise on the JavaScript array methods!
