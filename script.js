@@ -85,40 +85,38 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
 // Displaying the current balance
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance} EUR`;
 };
-calcDisplayBalance(account1.movements);
 
 //*************************************************************************************************
 // Display Summary
 //*************************************************************************************************
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (account) {
   // Getting the incomes
-  const incomes = movements
+  const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
 
   // Getting the outcomes
-  const outcomes = movements
+  const outcomes = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
   // Getting the interests
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
-calcDisplaySummary(account1.movements);
+
 //*************************************************************************************************
 // Create Username
 //*************************************************************************************************
@@ -132,3 +130,38 @@ const createUsername = function (accs) {
   });
 };
 createUsername(accounts);
+
+//*************************************************************************************************
+// Implement Login
+//*************************************************************************************************
+let currentAccount;
+
+btnLogin.addEventListener('click', function (event) {
+  // Prevent form from submitting
+  event.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //  Display UI and welcome message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    // Losing focus when logged in
+    inputLoginPin.blur();
+
+    //  Display movements
+    displayMovements(currentAccount.movements);
+
+    //  Display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    //  Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
