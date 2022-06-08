@@ -3,7 +3,7 @@
 ## 📝 [Bankist](https://plamena37.github.io/Bankist/) -  An overall practise on the JavaScript array methods!
 
 
-> ### It has two hardcoded accounts with which you can try it 😊
+### It has two hardcoded accounts with which you can try it 😊
 > - username: **pi**, password: **1111**;
 > - username: **hg**, password: **2222**; 
 
