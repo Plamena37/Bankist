@@ -4,8 +4,8 @@
 
 
 > ### It has two hardcoded accounts with which you can try it 😊
-> - usrname: **pi**, password: **1111**;
-> - usrname: **hg**, password: **2222**; 
+> - username: **pi**, password: **1111**;
+> - username: **hg**, password: **2222**; 
 
 ### The things you can do here are:
 - transfering money to the other account;
